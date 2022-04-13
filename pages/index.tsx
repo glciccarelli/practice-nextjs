@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Layout from '@components/Layout/Layout'
+import KawaiiHeader from '@components/KawaiiHeader/KawaiiHeader'
+import ProductList from '@components/ProductList/ProductList'
 
-const Home = () => {
+const HomePage = () => {
+  const [productList, setProductList] = useState<TProduct[]>([])
 
-    const [avocatoList, setAvocatoList] = useState<TProduct[]>([])
+  useEffect(() => {
+    window
+      .fetch('/api/avo')
+      .then((response) => response.json())
+      .then(({ data }: TAPIAvoResponse) => {
+        setProductList(data)
+      })
+  }, [])
 
-    useEffect(() => {
-        window.fetch('api/avocato')
-            .then(res => res.json())
-            .then(({ data, length }) => {
-                setAvocatoList(data)
-            })
-    }, [])
-
-    return (
-        <div>
-            <h1>Hello world!</h1>
-            {avocatoList.map((avocato) => <div>{avocato.name}</div>)}
-        </div>
-    )
+  return (
+    <Layout>
+      <KawaiiHeader />
+      <ProductList products={productList} />
+    </Layout>
+  )
 }
 
-export default Home
+export default HomePage

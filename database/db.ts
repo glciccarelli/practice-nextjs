@@ -1,9 +1,10 @@
+// Oh you curious...
 // This is not a real database,
 // But let's imagine it is one :)
 import allData from './data'
 
 class Database {
-  constructor() { }
+  constructor() {}
 
   async getAll(): Promise<TProduct[]> {
     const asArray = Object.values(allData)
